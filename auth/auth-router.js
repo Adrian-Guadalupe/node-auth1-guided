@@ -23,9 +23,14 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
    const { username, password } = req.body
 
-   User.findBy({ username })
+   Users.findBy({ username })
       .then(([user]) => {
          if (user && bcrypt.compareSync(password, user.password)) {
+            // remember this client
+            req.session.user = {
+               id: user.id,
+               username: user.username,
+            }
             res.status(200).json({ hello: user.username })
          } else {
             res.status(401).json({ message: 'invalid credentials' })
@@ -35,5 +40,16 @@ router.post("/login", (req, res) => {
          res.status(500).json({ errorMessage: 'error finding the user' })
       })
 });
+
+router.get('/logout', (req, res) => {
+   req.session
+      ?  req.session.destroy(err => {
+            err
+               ?  res.status(500).json({ message: 'error logging out...' })
+               :  res.status(200).json({ message: 'logged out successfulyy' })
+         })
+
+      :  res.status(200).json({ message: 'I dont know you' })
+})
 
 module.exports = router;

@@ -15,7 +15,12 @@ password --> hashing function --> hash
 
 Hash passwords before they're stored in the database
 
-frodo: $2a$08$Po8jb.I9JqGY7G5BO7pAZOqfGW0Mm2ugeToKYnhvaZl6GRn9i2QAO
-samwise: $2a$08$In/UEDp7LYdtyP3WTJmg7eCPtgKyT3.9H945RenVKKevpn8DPys56
+> When using sessions, the information is saved in the server
+> The cookie only needs the session id
 
 
+
+
+
+
+try auth0 or okta for authentication
